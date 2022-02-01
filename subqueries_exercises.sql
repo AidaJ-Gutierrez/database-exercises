@@ -38,7 +38,7 @@ FROM employees
 WHERE employees.emp_no IN (
     SELECT dept_manager.emp_no
     FROM dept_manager
-    WHERE dept_manager.to_date like '%999-%')
+    WHERE dept_manager.to_date > CURDATE())
 AND employees.gender = 'F';
 
 # BONUS
@@ -53,7 +53,7 @@ WHERE dept_no IN (
         FROM employees
         WHERE gender ='F'
         )
-    AND dept_manager.to_date like '%999-%' )
+    AND dept_manager.to_date > CURDATE())
 ORDER BY dept_name;
 
 # Find the first and last name of the employee with the highest salary.
