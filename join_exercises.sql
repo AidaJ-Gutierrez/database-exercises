@@ -118,15 +118,14 @@ ORDER BY dept_name;
 
 # Bonus: Find the names of all current employees, their department name, and their current manager's name .
 
-# SELECT  CONCAT( employees.first_name, ' ', employees.last_name) as Name, departments.dept_name,
-# FROM employees
-#          JOIN
-#               ON  = employees.emp_no
-#          JOIN dept_manager
-#               ON dept_manager.emp_no = salaries.emp_no
-#          JOIN departments
-#               ON  departments.dept_no = dept_manager.dept_no
-# WHERE dept_manager.to_date LIKE '9999-%'
-#   And salaries.to_date like '%9999%'
-# ORDER BY dept_name;
+SELECT CONCAT(e.first_name, ' ', e.last_name)   AS 'Employee',
+       d.dept_name                              AS 'Department Name',
+       CONCAT(e2.first_name, ' ', e2.last_name) AS 'Manager'
+FROM employees AS e
+         JOIN dept_emp de ON e.emp_no = de.emp_no
+         JOIN departments d ON de.dept_no = d.dept_no
+         JOIN dept_manager dm ON d.dept_no = dm.dept_no AND dm.to_date > CURDATE()
+         JOIN employees e2 ON e2.emp_no = dm.emp_no
+WHERE de.to_date > CURDATE()
+ORDER BY d.dept_name;
 

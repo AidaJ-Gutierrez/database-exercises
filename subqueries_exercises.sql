@@ -63,7 +63,8 @@ FROM employees
 WHERE emp_no IN(
     SELECT emp_no
     FROM salaries
-    WHERE salary like '%9999%'
-    );
+    WHERE salary IN(
+        SELECT MAX(salary)
+        FROM salaries));
 
 
